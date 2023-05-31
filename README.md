@@ -1,8 +1,13 @@
 # 🤓Docker-Py-ReVanced
 
-A little python script that will help you in building Revanced and Revanced-Extended [apps](#note)
+A little python script that will help you in building Revanced and Revanced-Extended [apps](#note).
 
-Note - I prefer [Revanced Extended](https://github.com/inotia00/revanced-patches/tree/revanced-extended) more
+**`Note`** - If you are a root user and want magisk module (Extended). Get them [here](https://github.com/nikhilbadyal/revanced-magisk-module)
+
+This is just a builder for revanced and not a revanced support. Please be understanding and refraining from asking
+about revanced features/bugs. Discuss those on proper relevant forums(on Revanced GitHub , Discord)
+
+**`Note`** - I prefer [Revanced Extended](https://github.com/inotia00/revanced-patches/tree/revanced-extended) more
 (for YouTube & YouTube Music) hence the YouTube and YouTube Music builds in this repo are from
 Revanced Extended.
 
@@ -128,16 +133,20 @@ By default, script build the version as recommended by Revanced team.
     6. [warnwetter](https://www.apkmirror.com/apk/deutscher-wetterdienst/warnwetter/)
     7. [spotify](https://spotify.en.uptodown.com/android)
     8. [nyx-music-player](https://nyx-music-player.en.uptodown.com/android)
-    9. [icon-pack-studio](https://icon-pack-studio.en.uptodown.com/android)
+    9. [icon_pack_studio](https://www.apkmirror.com/apk/smart-launcher-team/icon-pack-studio/)
     10. [ticktick](https://www.apkmirror.com/apk/appest-inc/ticktick-to-do-list-with-reminder-day-planner/)
-    11. [twitch](https://twitch.en.uptodown.com/android)
-    12. [pflotsh-ecmwf](https://m.apkpure.com/pflotsh-ecmwf/com.garzotto.pflotsh.ecmwf_a)
-    13. [hex-editor](https://m.apkpure.com/hex-editor/com.myprog.hexedit)
-    14. [citra](https://www.apkmirror.com/apk/citra-emulator/citra-emulator/)
-    15. [crunchyroll](https://www.apkmirror.com/apk/ellation-inc/crunchyroll/)
-    16. [windy](https://windy.en.uptodown.com/android)
-    17. [my-expenses](https://my-expenses.en.uptodown.com/android)
-    18. [backdrops](https://backdrops.en.uptodown.com/android)
+    11. [twitch](https://www.apkmirror.com/apk/twitch-interactive-inc/twitch/)
+    12. [hex-editor](https://m.apkpure.com/hex-editor/com.myprog.hexedit)
+    13. [citra](https://www.apkmirror.com/apk/citra-emulator/citra-emulator/)
+    14. [windy](https://www.apkmirror.com/apk/windy-weather-world-inc/windy-wind-weather-forecast/)
+    15. [my-expenses](https://my-expenses.en.uptodown.com/android)
+    16. [backdrops](https://backdrops.en.uptodown.com/android)
+    17. [expensemanager](https://apksos.com/app/com.ithebk.expensemanager)
+    18. [tasker](https://www.apkmirror.com/apk/joaomgcd/tasker-crafty-apps-eu/)
+    19. [irplus](https://irplus.en.uptodown.com/android)
+
+    <br>Please verify the source of original APKs yourself with links provided. I'm not responsible for any damaged caused.
+    If you know any better/safe source to download clean. Please raise a PR.
 
 2. Remember to download the **_Microg_**. Otherwise, you will not be able to open YouTube.
 3. By default, it will build only `youtube`. To build other apps supported by revanced team.
@@ -241,7 +250,29 @@ By default, script build the version as recommended by Revanced team.
     fact to define your normal configurations in `.env` file and sometimes if you want to build something different just
     once. Add it in `GitHub secrets`.<br>
     Or you can ignore what I said above and always use `GitHub secrets`.
-13. Sample Envs<br>
+13. If APKMirror or other apk source is blocked in your region or script somehow is unable to download from apkmirror.
+    You can download apk manually from any source. Place them in `/apks` directory and provide environment variable
+    in `.env` file or in `ENVS` in `GitHub secrets`(Recommended) in the format.
+    ```dotenv
+     EXISTING_DOWNLOADED_APKS=<Comma,Seperate,App,Name>
+    ```
+    Example:
+    ```dotenv
+     EXISTING_DOWNLOADED_APKS=youtube,youtube_music
+    ```
+    If you add above. Script will not download the `Youtube` & `youtube music`apk from internet and expects an apk in
+    `/apks` folder.
+
+    Name of the downloaded apk must match with the available app choices found [here.](#note)
+14. If you run script again & again. You might hit GitHub API limit. In that case you can provide your Personal
+    GitHub Access Token in `.env` file or in `ENVS` in `GitHub secrets` (Recommended) in the format -
+    ```dotenv
+     PERSONAL_ACCESS_TOKEN=<PAT>
+    ```
+15. Sample Envs<br>
     <img src="https://i.imgur.com/ajSE5nA.png" width="600" style="left">
+16. Make your Action has write access. If not click [here](https://github.
+    com/nikhilbadyal/docker-py-revanced/settings/actions). In the bottom give read and write access to Actions.
+    <img src="https://i.imgur.com/STSv2D3.png" width="400">
 
 Thanks to [@aliharslan0](https://github.com/aliharslan0/pyrevanced) for his work.

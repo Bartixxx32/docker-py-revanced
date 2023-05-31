@@ -6,7 +6,7 @@ from loguru import logger
 from requests import Session
 
 from src.config import RevancedConfig
-from src.utils import AppNotFound
+from src.utils import AppNotFound, handle_response
 
 
 class Patches(object):
@@ -19,16 +19,17 @@ class Patches(object):
         "de.dwd.warnapp": ("warnwetter", "_warnwetter"),
         "com.spotify.music": ("spotify", "_spotify"),
         "com.awedea.nyx": ("nyx-music-player", "_nyx"),
-        "ginlemon.iconpackstudio": ("icon-pack-studio", "_iconpackstudio"),
+        "ginlemon.iconpackstudio": ("icon_pack_studio", "_iconpackstudio"),
         "com.ticktick.task": ("ticktick", "_ticktick"),
         "tv.twitch.android.app": ("twitch", "_twitch"),
-        "com.garzotto.pflotsh.ecmwf_a": ("pflotsh-ecmwf", "_pflotsh"),
         "com.myprog.hexedit": ("hex-editor", "_hexeditor"),
         "org.citra.citra_emu": ("citra", "_citra"),
-        "com.crunchyroll.crunchyroid": ("citra", "_crunchyroll"),
         "co.windyapp.android": ("windy", "_windy"),
         "org.totschnig.myexpenses": ("my-expenses", "_expenses"),
         "com.backdrops.wallpapers": ("backdrops", "_backdrops"),
+        "com.ithebk.expensemanager": ("expensemanager", "_expensemanager"),
+        "net.dinglisch.android.taskerm": ("tasker", "_tasker"),
+        "net.binarymode.android.irplus": ("irplus", "_irplus"),
     }
     revanced_extended_app_ids = {
         "com.google.android.youtube": ("youtube", "_yt"),
@@ -61,10 +62,11 @@ class Patches(object):
         session = Session()
 
         logger.debug("fetching all patches")
-        resp = session.get(
+        response = session.get(
             "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
         )
-        patches = resp.json()
+        handle_response(response)
+        patches = response.json()
 
         for app_name in (self.revanced_app_ids[x][1] for x in self.revanced_app_ids):
             setattr(self, app_name, [])
@@ -84,8 +86,9 @@ class Patches(object):
         else:
             url = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
 
-        resp_extended = session.get(url)
-        extended_patches = resp_extended.json()
+        response = session.get(url)
+        handle_response(response)
+        extended_patches = response.json()
         for app_name in (
             self.revanced_extended_app_ids[x][1] for x in self.revanced_extended_app_ids
         ):
@@ -130,16 +133,17 @@ class Patches(object):
             "youtube_music": "_ytm",
             "spotify": "_spotify",
             "nyx-music-player": "_nyx",
-            "icon-pack-studio": "_iconpackstudio",
+            "icon_pack_studio": "_iconpackstudio",
             "ticktick": "_ticktick",
             "twitch": "_twitch",
-            "pflotsh-ecmwf": "_pflotsh",
             "hex-editor": "_hexeditor",
             "citra": "_citra",
-            "crunchyroll": "_crunchyroll",
             "windy": "_windy",
             "my-expenses": "_expenses",
             "backdrops": "_backdrops",
+            "expensemanager": "_expensemanager",
+            "tasker": "_tasker",
+            "irplus": "_irplus",
         }
         if not (app_name := app_names.get(app)):
             raise AppNotFound(app)
@@ -151,8 +155,8 @@ class Patches(object):
                 logger.debug(f"Recommended Version for patching {app} is {version}")
             else:
                 logger.debug("No recommended version.")
-        except StopIteration:
-            pass  # No recommended version available
+        except StopIteration:  # No recommended version available
+            pass
         return patches, version
 
     # noinspection IncorrectFormatting
